@@ -93,8 +93,8 @@ namespace expression_namespace {
 			try {
 				digit = stod(expr.substr(current), &digit_size);
 			}
-			catch (std::invalid_argument ia){
-				;	// if we are here, then current symbol in expt is not digit. 
+			catch (std::invalid_argument ia) {
+				;	// if we are here, then current symbol in expr is not digit. 
 					// this mean we just push this sumbol to _symbols.
 			}
 			if (digit_size != 0) {
