@@ -86,17 +86,29 @@ namespace expression_namespace {
 		std::string::size_type lenght = expr.size();
 		std::string::size_type current = 0;
 		while (current != lenght) {
-			if (isdigit(expr[current])) {
-				// size of digit (in symbols)
-				std::string::size_type digit_size;
+			// size of digit (in symbols)
+			std::string::size_type digit_size;
+			// digit getted from expr
+			double digit;
+			try {
+				digit = stod(expr.substr(current), &digit_size);
+			}
+			catch (std::invalid_argument ia){
+				;	// if we are here, then current symbol in expt is not digit. 
+					// this mean we just push this sumbol to _symbols.
+			}
+			if (digit_size != 0) {
 				// add digit to _digits
-				_digits.emplace_back(stod(expr.substr(current), &digit_size));
+				_digits.emplace_back(digit);
 				// move to the symbol in _expr after this digit
 				current += digit_size;
+				digit_size = 0;
 			}
 			else {
-				// add symbol to _symbols
-				_symbols.push_back(expr[current]);
+				if (!isspace(expr[current])) {
+					// add symbol to _symbols
+					_symbols.push_back(expr[current]);
+				}
 				// move to next symbol in _expr
 				++current;
 			}
