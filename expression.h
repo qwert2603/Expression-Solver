@@ -124,7 +124,9 @@ namespace expression_namespace {
 	}
 
 	void Expression::prioritization(std::list<char> &_symbols, std::list<unsigned> &_priorities) const {
-		unsigned cur_pr = 1;
+		unsigned cur_pr = 1;	// priority of current processed operation
+		// each bracket changes current priority on 2,
+		// because we need to differ priority of {'+', '-'} and {'*', '/'}
 		for (char c : _symbols) {
 			switch (c) {
 			case '(': {
