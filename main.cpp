@@ -6,7 +6,7 @@ using namespace std;
 int main() {
 	try {
 		expression_namespace::Expression e1("(3+2)/(7-5)");
-		cout << e1.compute();
+		cout << e1.compute();	// 2.5
 	}
 	catch (exception e) {
 		cout << e.what() << endl;
