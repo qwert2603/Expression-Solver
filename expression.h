@@ -87,7 +87,7 @@ namespace expression_namespace {
 		std::string::size_type current = 0;
 		while (current != lenght) {
 			// size of digit (in symbols)
-			std::string::size_type digit_size;
+			std::string::size_type digit_size = 0;
 			// digit getted from expr
 			double digit;
 			try {
