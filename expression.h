@@ -85,11 +85,14 @@ namespace expression_namespace {
 	void Expression::separating(std::list<double> &_digits, std::list<char> &_symbols, std::list<unsigned> &_priorities) const {
 		std::string::size_type lenght = expr.size();
 		std::string::size_type current = 0;
+		// size of digit (in symbols)
+		std::string::size_type digit_size = 0;
+		// digit getted from expr
+		double digit;
+		// ? is previous symbol - digit
+		// it is necessary for sharing operator '-' and negative digits, those have '-'. for example: (3 - -4)
+		bool post_digit = true;
 		while (current != lenght) {
-			// size of digit (in symbols)
-			std::string::size_type digit_size = 0;
-			// digit getted from expr
-			double digit;
 			try {
 				digit = stod(expr.substr(current), &digit_size);
 			}
@@ -97,17 +100,19 @@ namespace expression_namespace {
 				;	// if we are here, then current symbol in expr is not digit. 
 					// this mean we just push this sumbol to _symbols.
 			}
-			if (digit_size != 0) {
+			if (digit_size != 0 && !post_digit) {
 				// add digit to _digits
 				_digits.emplace_back(digit);
 				// move to the symbol in _expr after this digit
 				current += digit_size;
 				digit_size = 0;
+				post_digit = true;
 			}
 			else {
 				if (!isspace(expr[current])) {
 					// add symbol to _symbols
 					_symbols.push_back(expr[current]);
+					post_digit = false;
 				}
 				// move to next symbol in _expr
 				++current;
